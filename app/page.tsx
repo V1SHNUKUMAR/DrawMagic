@@ -6,17 +6,20 @@ import Sidebar from "./components/Sidebar";
 
 export default function Home() {
   const [pickedColor, setPickedColor] = useState<string>("#000");
-  const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
+  const [selectedPopup, setSelectedPopup] = useState<string | null>(null);
+  const [brushDets, setBrushDets] = useState({
+    brushThickness: 5,
+    brushOpacity: 100,
+  });
 
   const { canvasRef, onMouseDown, clearCanvas } = useDraw(drawLine);
 
   function drawLine({ ctx, currPoint, prevPoint }: Draw): void {
     const { x: currX, y: currY } = currPoint;
-    const lineWidth = 5;
 
     let startPoint = prevPoint ?? currPoint;
     ctx.beginPath();
-    ctx.lineWidth = lineWidth;
+    ctx.lineWidth = brushDets?.brushThickness;
     ctx.strokeStyle = pickedColor;
     ctx.moveTo(startPoint.x, startPoint.y);
     ctx.lineTo(currX, currY);
@@ -42,14 +45,33 @@ export default function Home() {
     }
   }, []);
 
+  function handleChange(key: any, data: any) {
+    console.log("handle change run");
+    switch (key) {
+      case "adjustBrushThickness": {
+        console.log("data", data);
+        setBrushDets({ ...brushDets, brushThickness: data });
+        break;
+      }
+      case "adjustBrushOpacity":
+        setBrushDets({ ...brushDets, brushOpacity: data });
+        break;
+
+      default:
+        break;
+    }
+  }
+
   return (
     <div className="h-screen w-full bg-zinc-800 flex flex-col md:flex-row items-center">
       <Sidebar
         pickedColor={pickedColor}
         setPickedColor={setPickedColor}
-        showColorPicker={showColorPicker}
-        setShowColorPicker={setShowColorPicker}
+        selectedPopup={selectedPopup}
+        setSelectedPopup={setSelectedPopup}
         clearCanvas={clearCanvas}
+        brushDets={brushDets}
+        handleChange={handleChange}
       />
       <div className="flex-1 h-full shadow-2xl rounded-l-3xl bg-transparent overflow-hidden">
         <canvas

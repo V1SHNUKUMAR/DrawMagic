@@ -2,15 +2,15 @@ import React, { useEffect, useRef } from "react";
 import { ColorResult, ChromePicker } from "react-color";
 
 interface ColorPickerPropType {
-  showColorPicker: boolean;
-  setShowColorPicker: (show: boolean) => void;
+  selectedPopup: string | null;
+  setSelectedPopup: (show: string | null) => void;
   pickedColor: string;
   setPickedColor: (color: string) => void;
 }
 
 const ColorPickerModal = ({
-  showColorPicker,
-  setShowColorPicker,
+  selectedPopup,
+  setSelectedPopup,
   pickedColor,
   setPickedColor,
 }: ColorPickerPropType) => {
@@ -22,11 +22,11 @@ const ColorPickerModal = ({
         modalRef.current &&
         !modalRef.current.contains(event.target as Node)
       ) {
-        setShowColorPicker(false);
+        setSelectedPopup("colorPickerPopup");
       }
     };
 
-    if (showColorPicker) {
+    if (selectedPopup === "colorPickerPopup") {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -35,13 +35,13 @@ const ColorPickerModal = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showColorPicker, setShowColorPicker]);
+  }, [selectedPopup, setSelectedPopup]);
 
   return (
     <div
       ref={modalRef}
       className={`overflow-hidden absolute top-0 left-full z-40 shadow-lg duration-300 border origin-top-left ${
-        showColorPicker
+        selectedPopup === "colorPickerPopup"
           ? "ml-2 opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
       }`}
