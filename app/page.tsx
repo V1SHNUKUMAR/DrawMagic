@@ -43,7 +43,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="h-screen w-full bg-slate-50 flex flex-col md:flex-row items-center">
+    <div className="h-screen w-full bg-zinc-800 flex flex-col md:flex-row items-center">
       <Sidebar
         pickedColor={pickedColor}
         setPickedColor={setPickedColor}
@@ -51,13 +51,15 @@ export default function Home() {
         setShowColorPicker={setShowColorPicker}
         clearCanvas={clearCanvas}
       />
-      <canvas
-        onMouseDown={onMouseDown}
-        ref={canvasRef}
-        // width={600}
-        // height={500}
-        className="border-2 border-black rounded-md w-full h-full my-10 max-w-[50%] sm:max-w-[80%] lg:max-w-[90%] max-h-[50%] sm:max-h-[80%] lg:max-h-[90%]"
-      />
+      <div className="flex-1 h-full shadow-2xl rounded-l-3xl bg-transparent overflow-hidden">
+        <canvas
+          onMouseDown={onMouseDown}
+          ref={canvasRef}
+          // width={600}
+          // height={500}
+          className="w-full h-full bg-zinc-300"
+        />
+      </div>
     </div>
   );
 }

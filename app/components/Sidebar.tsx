@@ -20,7 +20,7 @@ const Sidebar = ({
   clearCanvas,
 }: SidebarPropType) => {
   return (
-    <div className="h-screen px-8 py-5 flex flex-col justify-center items-center">
+    <div className="h-screen py-5 px-10 flex flex-col justify-center items-center">
       <div>
         <div className="space-y-5">
           <div className="relative">
@@ -44,9 +44,9 @@ const Sidebar = ({
           <button
             type="button"
             onClick={clearCanvas}
-            className="text-black border border-slate-400 rounded-md w-full aspect-square py-2 flex justify-center items-center text-sm"
+            className="text-black border rounded-md w-full aspect-square py-2 flex justify-center items-center text-sm"
           >
-            <GrPowerReset className="text-lg" />
+            <GrPowerReset className="text-lg" color="white" />
           </button>
         </div>
       </div>
