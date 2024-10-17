@@ -53,7 +53,7 @@ const BrushThicknessPopup = ({
       <div className="p-3 pr-0">
         <div className="flex items-center gap-2">
           <Slider
-            className="min-w-[150px] a"
+            className="min-w-[150px]"
             min={4}
             max={100}
             onChange={(val) => {
