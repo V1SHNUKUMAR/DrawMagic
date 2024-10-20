@@ -1,9 +1,11 @@
 import React from "react";
-import ColorPickerModal from "../modals/ColorPickerModal";
 import { GrPowerReset } from "react-icons/gr";
 import { FaCircle } from "react-icons/fa";
-import BrushThicknessPopup from "./popups/BrushThicknessPopup";
+import BrushThicknessPopup from "./popover/BrushThicknessPopover";
 import { Tooltip } from "antd";
+import GenericPopupOver from "./generic/GenericPopover";
+import ElementWidthPopover from "./generic/ElementWithPopover";
+import ColorPickerPopover from "./popover/ColorPickerPopover";
 
 interface SidebarPropType {
   pickedColor: string;
@@ -28,40 +30,50 @@ const Sidebar = ({
     <div className="h-screen py-5 px-10 flex flex-col justify-center items-center">
       <div>
         <div className="space-y-5">
-          <div className="relative">
-            <Tooltip overlayClassName="!p-0" title={"Pick color"}>
+          <ElementWidthPopover
+            tooltip={"Choose Color"}
+            component={(props) => (
               <button
-                onClick={() => {
-                  setSelectedPopup((val: any) =>
-                    val === null || val !== "colorPickerPopup"
-                      ? "colorPickerPopup"
-                      : null
-                  );
-                }}
+                // onClick={() => {
+                //   setSelectedPopup((val: any) =>
+                //     val === null || val !== "colorPickerPopup"
+                //       ? "colorPickerPopup"
+                //       : null
+                //   );
+                // }}
                 className="h-10 w-10 border rounded"
                 style={{
                   background: pickedColor,
                 }}
+                {...props}
               ></button>
-            </Tooltip>
-            <ColorPickerModal
-              selectedPopup={selectedPopup}
-              setSelectedPopup={setSelectedPopup}
-              pickedColor={pickedColor}
-              setPickedColor={setPickedColor}
-            />
-          </div>
-          <Tooltip overlayClassName="!p-0" title={"Pick color"}>
-            <button
-              type="button"
-              onClick={clearCanvas}
-              className="text-black border rounded-md w-full aspect-square py-2 flex justify-center items-center text-sm"
-            >
-              <GrPowerReset className="text-lg" color="white" />
-            </button>
+            )}
+            content={() => (
+              <ColorPickerPopover
+                pickedColor={pickedColor}
+                setPickedColor={setPickedColor}
+              />
+            )}
+          />
+          <Tooltip
+            overlayClassName="p-0"
+            overlayStyle={{ fontSize: "12px" }}
+            mouseEnterDelay={0.75}
+            title={"Erase all"}
+          >
+            <div>
+              <button
+                type="button"
+                onClick={clearCanvas}
+                className="text-black border rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px]"
+              >
+                <GrPowerReset className="text-lg" color="white" />
+              </button>
+            </div>
           </Tooltip>
-          <div className="relative">
-            <Tooltip overlayClassName="!p-0" title={"Thickness"}>
+          <ElementWidthPopover
+            tooltip={"Thickness"}
+            component={(props) => (
               <button
                 type="button"
                 onClick={() => {
@@ -71,18 +83,19 @@ const Sidebar = ({
                       : null
                   );
                 }}
-                className="text-black border rounded-md w-full aspect-square py-2 flex justify-center items-center text-sm"
+                className="text-black border rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px]"
+                {...props}
               >
                 <FaCircle color="white" />
               </button>
-            </Tooltip>
-            <BrushThicknessPopup
-              selectedPopup={selectedPopup}
-              setSelectedPopup={setSelectedPopup}
-              brushThickness={brushDets?.brushThickness}
-              handleChange={handleChange}
-            />
-          </div>
+            )}
+            content={() => (
+              <BrushThicknessPopup
+                brushThickness={brushDets?.brushThickness}
+                handleChange={handleChange}
+              />
+            )}
+          />
         </div>
       </div>
     </div>

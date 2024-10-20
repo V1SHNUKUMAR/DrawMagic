@@ -8,6 +8,30 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+@layer components {
+  .tilt-on {
+    transform: perspective(600px) rotateX(10deg) rotateY(10deg) translateX(20px);
+    opacity: 0;
+  }
+
+  .tilt-off {
+    transform: perspective(600px) rotateX(0deg) rotateY(0deg) translateX(0px);
+    opacity: 1;
+  }
+}
+
+@layer components {
+  .scale-out {
+    transform: perspective(600px) rotateX(90deg) rotateY(20deg) scale(0);
+    opacity: 0.5;
+  }
+
+  .scale-in {
+    transform: perspective(600px) rotateX(0deg) rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;

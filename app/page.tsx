@@ -46,10 +46,8 @@ export default function Home() {
   }, []);
 
   function handleChange(key: any, data: any) {
-    console.log("handle change run");
     switch (key) {
       case "adjustBrushThickness": {
-        console.log("data", data);
         setBrushDets({ ...brushDets, brushThickness: data });
         break;
       }
@@ -73,10 +71,11 @@ export default function Home() {
         brushDets={brushDets}
         handleChange={handleChange}
       />
-      <div className="flex-1 h-full shadow-2xl rounded-l-3xl bg-transparent overflow-hidden">
+      <div className="flex-1 my-5 h-full shadow-2xl rounded-l-3xl bg-transparent overflow-hidden">
         <canvas
           onMouseDown={onMouseDown}
           ref={canvasRef}
+          id="canvasContainer"
           // width={600}
           // height={500}
           className="w-full h-full bg-zinc-300"
