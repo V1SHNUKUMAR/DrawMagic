@@ -3,7 +3,6 @@ import { GrPowerReset } from "react-icons/gr";
 import { FaCircle } from "react-icons/fa";
 import BrushThicknessPopup from "./popover/BrushThicknessPopover";
 import { Tooltip } from "antd";
-import GenericPopupOver from "./generic/GenericPopover";
 import ElementWidthPopover from "./generic/ElementWithPopover";
 import ColorPickerPopover from "./popover/ColorPickerPopover";
 
