@@ -1,10 +1,11 @@
 import React from "react";
 import { GrPowerReset } from "react-icons/gr";
-import { FaCircle } from "react-icons/fa";
+import { FaPen } from "react-icons/fa";
 import BrushThicknessPopup from "./popover/BrushThicknessPopover";
 import { Tooltip } from "antd";
 import ElementWidthPopover from "./generic/ElementWithPopover";
 import ColorPickerPopover from "./popover/ColorPickerPopover";
+import { BsBorderWidth, BsEraserFill } from "react-icons/bs";
 
 interface SidebarPropType {
   pickedColor: string;
@@ -14,6 +15,7 @@ interface SidebarPropType {
   clearCanvas: () => void;
   handleChange: any;
   brushDets: { brushThickness: number };
+  isEraseModeOn: any;
 }
 
 const Sidebar = ({
@@ -24,12 +26,104 @@ const Sidebar = ({
   clearCanvas,
   handleChange,
   brushDets,
+  isEraseModeOn,
 }: SidebarPropType) => {
   return (
-    <div className="h-screen py-5 px-10 flex flex-col justify-center items-center">
-      <div>
+    <div className="fixed z-10 h-screen pl-5 py-5 bg-transparent">
+      <div className="h-full bg-black/50 backdrop-blur-lg py-5 px-5 rounded-xl flex flex-col justify-center items-center">
         <div className="space-y-5">
+          {/* pen */}
+          <Tooltip
+            overlayClassName="p-0"
+            overlayStyle={{ fontSize: "12px" }}
+            mouseEnterDelay={0.75}
+            title={"Pen"}
+          >
+            <div>
+              <button
+                type="button"
+                onClick={() => handleChange("toggleEraseMode")}
+                className={`group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white ${
+                  !isEraseModeOn && "bg-white shadow-lg shadow-white/50"
+                }`}
+              >
+                <FaPen
+                  className={`text-base text-white group-hover:text-black`}
+                  color={!isEraseModeOn ? "black" : ""}
+                />
+              </button>
+            </div>
+          </Tooltip>
+          {/* brush thickness */}
           <ElementWidthPopover
+            tooltip={"Thickness"}
+            component={(props) => (
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedPopup((val: any) =>
+                    val === null || val !== "brushThicknessPopup"
+                      ? "brushThicknessPopup"
+                      : null
+                  );
+                }}
+                className="group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white"
+                {...props}
+              >
+                <BsBorderWidth className="text-base text-white group-hover:text-black" />
+              </button>
+            )}
+            content={() => (
+              <BrushThicknessPopup
+                brushThickness={brushDets?.brushThickness}
+                handleChange={handleChange}
+              />
+            )}
+          />
+          {/* reset */}
+          <Tooltip
+            overlayClassName="p-0"
+            overlayStyle={{ fontSize: "12px" }}
+            mouseEnterDelay={0.75}
+            title={"Erase all"}
+          >
+            <div>
+              <button
+                type="button"
+                onClick={clearCanvas}
+                className="group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white"
+              >
+                <GrPowerReset className="text-lg text-white group-hover:text-black" />
+              </button>
+            </div>
+          </Tooltip>
+          {/* eraser */}
+          <Tooltip
+            overlayClassName="p-0"
+            overlayStyle={{ fontSize: "12px" }}
+            mouseEnterDelay={0.75}
+            title={"Eraser"}
+          >
+            <div>
+              <button
+                type="button"
+                onClick={() => handleChange("toggleEraseMode")}
+                className={`group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white ${
+                  isEraseModeOn && "bg-white shadow-lg shadow-white/50"
+                }`}
+              >
+                <BsEraserFill
+                  className={`text-lg text-white group-hover:text-black`}
+                  color={isEraseModeOn ? "black" : ""}
+                />
+              </button>
+            </div>
+          </Tooltip>
+          {/* divider */}
+          <div className="h-[3px] w-[3px] bg-white rounded-full mx-auto"></div>
+          {/* color picker */}
+          <ElementWidthPopover
+            positionProps={{ top: "auto", bottom: "0" }}
             tooltip={"Choose Color"}
             component={(props) => (
               <button
@@ -51,47 +145,6 @@ const Sidebar = ({
               <ColorPickerPopover
                 pickedColor={pickedColor}
                 setPickedColor={setPickedColor}
-              />
-            )}
-          />
-          <Tooltip
-            overlayClassName="p-0"
-            overlayStyle={{ fontSize: "12px" }}
-            mouseEnterDelay={0.75}
-            title={"Erase all"}
-          >
-            <div>
-              <button
-                type="button"
-                onClick={clearCanvas}
-                className="text-black border rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px]"
-              >
-                <GrPowerReset className="text-lg" color="white" />
-              </button>
-            </div>
-          </Tooltip>
-          <ElementWidthPopover
-            tooltip={"Thickness"}
-            component={(props) => (
-              <button
-                type="button"
-                onClick={() => {
-                  setSelectedPopup((val: any) =>
-                    val === null || val !== "brushThicknessPopup"
-                      ? "brushThicknessPopup"
-                      : null
-                  );
-                }}
-                className="text-black border rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px]"
-                {...props}
-              >
-                <FaCircle color="white" />
-              </button>
-            )}
-            content={() => (
-              <BrushThicknessPopup
-                brushThickness={brushDets?.brushThickness}
-                handleChange={handleChange}
               />
             )}
           />

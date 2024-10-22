@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface GenericPopupOverProps {
   isVisible: boolean;
   content: JSX.Element | string;
   closePopover: () => void;
   position: { top: number; left: number };
+  PopoverRef: any;
 }
 
 const GenericPopupOver: React.FC<GenericPopupOverProps> = ({
@@ -12,8 +13,9 @@ const GenericPopupOver: React.FC<GenericPopupOverProps> = ({
   content,
   closePopover,
   position,
+  PopoverRef,
 }) => {
-  const PopoverRef = useRef<HTMLDivElement>(null);
+  // const PopoverRef = useRef<HTMLDivElement>(null);
 
   // Close Popup when clicking outside
   useEffect(() => {
@@ -51,12 +53,10 @@ const GenericPopupOver: React.FC<GenericPopupOverProps> = ({
     };
   }, [isVisible, closePopover]);
 
-  //   if (!isVisible) return null;
-
   return (
     <div
       ref={PopoverRef}
-      className={`fixed z-50 bg-white/50 text-black backdrop-blur-md rounded overflow-hidden shadow-lg origin-top-left duration-300  transition ${
+      className={`fixed z-50 bg-white/70 -mt-5 text-black backdrop-blur-md rounded overflow-hidden shadow-lg origin-top-left duration-300 transition ${
         isVisible
           ? "scale-in pointer-events-auto"
           : "scale-out pointer-events-none"
