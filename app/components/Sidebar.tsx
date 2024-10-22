@@ -123,6 +123,7 @@ const Sidebar = ({
           <div className="h-[3px] w-[3px] bg-white rounded-full mx-auto"></div>
           {/* color picker */}
           <ElementWidthPopover
+            positionProps={{ top: "auto", bottom: "0" }}
             tooltip={"Choose Color"}
             component={(props) => (
               <button

@@ -6,15 +6,25 @@ interface ElementWithPopoverProps {
   component?: React.ElementType; // Accepts component
   tooltip?: string | JSX.Element | (() => JSX.Element);
   content: any; //content for popover
+  positionProps?: {
+    top?: string | number;
+    left?: string | number;
+    right?: string | number;
+    bottom?: string | number;
+  };
 }
 
 const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
   component: Component = "button",
   tooltip,
   content,
+  positionProps,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
+  const [popoverPosition, setPopoverPosition] = useState<any>({
+    top: 0,
+    left: 0,
+  });
   const [PopoverContent, setPopoverContent] = useState<JSX.Element | string>(
     ""
   );
@@ -34,7 +44,11 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
       setIsVisible(false);
     } else {
       const contentToAdd = typeof content === "function" ? content() : content;
-      setPopoverPosition({ top: rect.top, left: rect.right + 8 });
+      setPopoverPosition({
+        top: rect.top,
+        left: rect.right + 8,
+        ...positionProps,
+      });
       setPopoverContent(contentToAdd);
       setIsVisible(true);
     }
