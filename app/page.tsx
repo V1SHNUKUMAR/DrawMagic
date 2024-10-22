@@ -11,6 +11,8 @@ export default function Home() {
     brushThickness: 5,
     brushOpacity: 100,
   });
+  const [canvasBgColor, setCanvasBgColor] = useState("#D4D4D8");
+  const [isEraseModeOn, setIsEraseModeOn] = useState(false);
 
   const { canvasRef, onMouseDown, clearCanvas } = useDraw(drawLine);
 
@@ -20,12 +22,12 @@ export default function Home() {
     let startPoint = prevPoint ?? currPoint;
     ctx.beginPath();
     ctx.lineWidth = brushDets?.brushThickness;
-    ctx.strokeStyle = pickedColor;
+    ctx.strokeStyle = isEraseModeOn ? canvasBgColor : pickedColor;
     ctx.moveTo(startPoint.x, startPoint.y);
     ctx.lineTo(currX, currY);
     ctx.stroke();
 
-    ctx.fillStyle = pickedColor;
+    ctx.fillStyle = isEraseModeOn ? canvasBgColor : pickedColor;
     ctx.beginPath();
     ctx.arc(startPoint.x, startPoint.y, 2, 0, 2 * Math.PI);
     ctx.fill();
@@ -51,9 +53,15 @@ export default function Home() {
         setBrushDets({ ...brushDets, brushThickness: data });
         break;
       }
-      case "adjustBrushOpacity":
+      case "adjustBrushOpacity": {
         setBrushDets({ ...brushDets, brushOpacity: data });
         break;
+      }
+
+      case "toggleEraseMode": {
+        setIsEraseModeOn(!isEraseModeOn);
+        break;
+      }
 
       default:
         break;
@@ -61,7 +69,7 @@ export default function Home() {
   }
 
   return (
-    <div className="h-screen w-full bg-zinc-800 flex flex-col md:flex-row items-center">
+    <div className="h-screen w-full bg-zinc-800">
       <Sidebar
         pickedColor={pickedColor}
         setPickedColor={setPickedColor}
@@ -70,15 +78,19 @@ export default function Home() {
         clearCanvas={clearCanvas}
         brushDets={brushDets}
         handleChange={handleChange}
+        isEraseModeOn={isEraseModeOn}
       />
-      <div className="flex-1 my-5 h-full shadow-2xl rounded-l-3xl bg-transparent overflow-hidden">
+      <div className="h-full bg-transparent">
         <canvas
           onMouseDown={onMouseDown}
           ref={canvasRef}
           id="canvasContainer"
           // width={600}
           // height={500}
-          className="w-full h-full bg-zinc-300"
+          className={`w-full h-full`}
+          style={{
+            backgroundColor: canvasBgColor,
+          }}
         />
       </div>
     </div>

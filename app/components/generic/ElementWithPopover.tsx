@@ -1,4 +1,4 @@
-import { ElementType, useState } from "react";
+import { ElementType, useRef, useState } from "react";
 import { Tooltip } from "antd";
 import GenericPopupOver from "./GenericPopover";
 
@@ -19,27 +19,29 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
     ""
   );
 
+  const PopoverRef = useRef(null);
+
   const togglePopover = (
     event: React.MouseEvent<HTMLButtonElement>,
     content: string | any
   ) => {
-    event.stopPropagation(); // Prevent the click from bubbling up
+    event.stopPropagation();
 
     const rect = event.currentTarget.getBoundingClientRect();
 
     // Toggle visibility of the popover
     if (isVisible) {
-      setIsVisible(false); // Close the popover if it is open
+      setIsVisible(false);
     } else {
       const contentToAdd = typeof content === "function" ? content() : content;
       setPopoverPosition({ top: rect.top, left: rect.right + 8 });
       setPopoverContent(contentToAdd);
-      setIsVisible(true); // Open the popover if it is closed
+      setIsVisible(true);
     }
   };
 
   const closePopover = () => {
-    setIsVisible(false); // Close the popover when needed
+    setIsVisible(false);
   };
 
   return (
@@ -64,6 +66,7 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
         closePopover={closePopover}
         content={PopoverContent}
         position={popoverPosition}
+        PopoverRef={PopoverRef}
       />
     </div>
   );
