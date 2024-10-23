@@ -1,12 +1,18 @@
-import { ElementType, useState } from "react";
+import { ElementType, useRef, useState } from "react";
 import { Tooltip } from "antd";
 import GenericPopupOver from "./GenericPopover";
 
 interface ElementWithPopoverProps {
   component?: React.ElementType;
   tooltip?: string | JSX.Element | (() => JSX.Element);
-  content: any;
+  content: any; //content for popover
   onClose?: any;
+  positionProps?: {
+    top?: string | number;
+    left?: string | number;
+    right?: string | number;
+    bottom?: string | number;
+  };
 }
 
 const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
@@ -14,12 +20,18 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
   tooltip,
   content,
   onClose,
+  positionProps,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
+  const [popoverPosition, setPopoverPosition] = useState<any>({
+    top: 0,
+    left: 0,
+  });
   const [PopoverContent, setPopoverContent] = useState<JSX.Element | string>(
     ""
   );
+
+  const PopoverRef = useRef(null);
 
   const togglePopover = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -34,7 +46,11 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
       setIsVisible(false);
     } else {
       const contentToAdd = typeof content === "function" ? content() : content;
-      setPopoverPosition({ top: rect.top, left: rect.right + 8 });
+      setPopoverPosition({
+        top: rect.top,
+        left: rect.right + 8,
+        ...positionProps,
+      });
       setPopoverContent(contentToAdd);
       setIsVisible(true);
     }
@@ -66,6 +82,7 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
         closePopover={closePopover}
         content={PopoverContent}
         position={popoverPosition}
+        PopoverRef={PopoverRef}
       />
     </div>
   );
