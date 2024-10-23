@@ -1,50 +1,68 @@
-import { ElementType, useState } from "react";
+import { ElementType, useRef, useState } from "react";
 import { Tooltip } from "antd";
 import GenericPopupOver from "./GenericPopover";
 
 interface ElementWithPopoverProps {
-  component?: React.ElementType; // Accepts component
+  component?: React.ElementType;
   tooltip?: string | JSX.Element | (() => JSX.Element);
   content: any; //content for popover
+  onClose?: any;
+  positionProps?: {
+    top?: string | number;
+    left?: string | number;
+    right?: string | number;
+    bottom?: string | number;
+  };
 }
 
 const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
   component: Component = "button",
   tooltip,
   content,
+  onClose,
+  positionProps,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
+  const [popoverPosition, setPopoverPosition] = useState<any>({
+    top: 0,
+    left: 0,
+  });
   const [PopoverContent, setPopoverContent] = useState<JSX.Element | string>(
     ""
   );
+
+  const PopoverRef = useRef(null);
 
   const togglePopover = (
     event: React.MouseEvent<HTMLButtonElement>,
     content: string | any
   ) => {
-    event.stopPropagation(); // Prevent the click from bubbling up
+    event.stopPropagation();
 
     const rect = event.currentTarget.getBoundingClientRect();
 
     // Toggle visibility of the popover
     if (isVisible) {
-      setIsVisible(false); // Close the popover if it is open
+      setIsVisible(false);
     } else {
       const contentToAdd = typeof content === "function" ? content() : content;
-      setPopoverPosition({ top: rect.top, left: rect.right + 8 });
+      setPopoverPosition({
+        top: rect.top,
+        left: rect.right + 8,
+        ...positionProps,
+      });
       setPopoverContent(contentToAdd);
-      setIsVisible(true); // Open the popover if it is closed
+      setIsVisible(true);
     }
   };
 
   const closePopover = () => {
-    setIsVisible(false); // Close the popover when needed
+    setIsVisible(false);
+    onClose && onClose();
   };
 
   return (
     <div className="relative">
-      {/* Triggering Element */}
       <Tooltip
         overlayClassName="p-0"
         overlayStyle={{ fontSize: "12px" }}
@@ -64,6 +82,7 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
         closePopover={closePopover}
         content={PopoverContent}
         position={popoverPosition}
+        PopoverRef={PopoverRef}
       />
     </div>
   );
