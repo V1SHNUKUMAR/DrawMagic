@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { GrPowerReset } from "react-icons/gr";
 import { FaCircle } from "react-icons/fa";
 import BrushThicknessPopup from "./popover/BrushThicknessPopover";
@@ -6,6 +6,7 @@ import { Tooltip } from "antd";
 import GenericPopupOver from "./generic/GenericPopover";
 import ElementWidthPopover from "./generic/ElementWithPopover";
 import ColorPickerPopover from "./popover/ColorPickerPopover";
+import { CursorContext } from "../context/cursorProvider";
 
 interface SidebarPropType {
   pickedColor: string;
@@ -26,6 +27,8 @@ const Sidebar = ({
   handleChange,
   brushDets,
 }: SidebarPropType) => {
+  // const { setCustomCursor } = useContext(CursorContext);
+
   return (
     <div className="h-screen py-5 px-10 flex flex-col justify-center items-center">
       <div>

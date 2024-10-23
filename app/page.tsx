@@ -1,8 +1,10 @@
 "use client";
 
 import { useDraw } from "@/hooks/useDraw";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Sidebar from "./components/Sidebar";
+import CursorProvider, { CursorContext } from "./context/cursorProvider";
+import DrawingCanvas from "./components/DrawingCanvas";
 
 export default function Home() {
   const [pickedColor, setPickedColor] = useState<string>("#000");
@@ -71,16 +73,9 @@ export default function Home() {
         brushDets={brushDets}
         handleChange={handleChange}
       />
-      <div className="flex-1 my-5 h-full shadow-2xl rounded-l-3xl bg-transparent overflow-hidden">
-        <canvas
-          onMouseDown={onMouseDown}
-          ref={canvasRef}
-          id="canvasContainer"
-          // width={600}
-          // height={500}
-          className="w-full h-full bg-zinc-300"
-        />
-      </div>
+      <CursorProvider>
+        <DrawingCanvas canvasRef={canvasRef} onMouseDown={onMouseDown} />
+      </CursorProvider>
     </div>
   );
 }
