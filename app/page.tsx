@@ -1,8 +1,10 @@
 "use client";
 
 import { useDraw } from "@/hooks/useDraw";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Sidebar from "./components/Sidebar";
+import CursorProvider, { CursorContext } from "./context/cursorProvider";
+import DrawingCanvas from "./components/DrawingCanvas";
 
 export default function Home() {
   const [pickedColor, setPickedColor] = useState<string>("#000");
@@ -80,19 +82,13 @@ export default function Home() {
         handleChange={handleChange}
         isEraseModeOn={isEraseModeOn}
       />
-      <div className="h-full bg-transparent">
-        <canvas
+      <CursorProvider>
+        <DrawingCanvas
+          canvasRef={canvasRef}
           onMouseDown={onMouseDown}
-          ref={canvasRef}
-          id="canvasContainer"
-          // width={600}
-          // height={500}
-          className={`w-full h-full`}
-          style={{
-            backgroundColor: canvasBgColor,
-          }}
+          canvasBgColor={canvasBgColor}
         />
-      </div>
+      </CursorProvider>
     </div>
   );
 }

@@ -19,7 +19,7 @@ const GenericPopupOver: React.FC<GenericPopupOverProps> = ({
 
   // Close Popup when clicking outside
   useEffect(() => {
-    const canvasElement = document.getElementById("canvasContainer"); // Selecting the canvas
+    const canvasElement = document.getElementById("canvas"); // Selecting the canvas
     const PopoverElement = PopoverRef.current;
 
     const handleOutsideClick = (event: MouseEvent) => {

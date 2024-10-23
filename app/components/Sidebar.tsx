@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { GrPowerReset } from "react-icons/gr";
 import { FaPen } from "react-icons/fa";
 import BrushThicknessPopup from "./popover/BrushThicknessPopover";
@@ -6,6 +6,7 @@ import { Tooltip } from "antd";
 import ElementWidthPopover from "./generic/ElementWithPopover";
 import ColorPickerPopover from "./popover/ColorPickerPopover";
 import { BsBorderWidth, BsEraserFill } from "react-icons/bs";
+import { CursorContext } from "../context/cursorProvider";
 
 interface SidebarPropType {
   pickedColor: string;
@@ -28,6 +29,8 @@ const Sidebar = ({
   brushDets,
   isEraseModeOn,
 }: SidebarPropType) => {
+  // const { setCustomCursor } = useContext(CursorContext);
+
   return (
     <div className="fixed z-10 h-screen pl-5 py-5 bg-transparent">
       <div className="h-full bg-black/50 backdrop-blur-lg py-5 px-5 rounded-xl flex flex-col justify-center items-center">
