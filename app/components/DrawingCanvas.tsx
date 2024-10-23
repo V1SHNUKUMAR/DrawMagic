@@ -4,9 +4,14 @@ import { CursorContext } from "../context/cursorProvider";
 interface DrawingCanvasType {
   canvasRef: any;
   onMouseDown: any;
+  canvasBgColor: string;
 }
 
-const DrawingCanvas = ({ canvasRef, onMouseDown }: DrawingCanvasType) => {
+const DrawingCanvas = ({
+  canvasRef,
+  onMouseDown,
+  canvasBgColor,
+}: DrawingCanvasType) => {
   const { setCustomCursor, onMouseEnterCanvas, onMouseLeaveCanvas } =
     useContext(CursorContext);
 
@@ -17,7 +22,7 @@ const DrawingCanvas = ({ canvasRef, onMouseDown }: DrawingCanvasType) => {
       id="canvasContainer"
       onMouseEnter={onMouseEnterCanvas}
       onMouseLeave={onMouseLeaveCanvas}
-      className="flex-1 my-5 h-full shadow-2xl rounded-l-3xl bg-transparent overflow-hidden"
+      className="h-full bg-transparent"
     >
       <canvas
         onMouseDown={onMouseDown}
@@ -25,7 +30,10 @@ const DrawingCanvas = ({ canvasRef, onMouseDown }: DrawingCanvasType) => {
         id="canvas"
         // width={600}
         // height={500}
-        className="w-full h-full bg-zinc-300"
+        className="w-full h-full"
+        style={{
+          backgroundColor: canvasBgColor,
+        }}
       />
     </div>
   );
