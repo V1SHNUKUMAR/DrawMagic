@@ -20,6 +20,7 @@ export default function Home() {
     const { x: currX, y: currY } = currPoint;
 
     let startPoint = prevPoint ?? currPoint;
+    //  here the ctx start and begin the path
     ctx.beginPath();
     ctx.lineWidth = brushDets?.brushThickness;
     ctx.strokeStyle = pickedColor;
@@ -28,6 +29,7 @@ export default function Home() {
     ctx.lineTo(currX, currY);
     ctx.stroke();
 
+    // just add one change here for testrring some thing
     ctx.fillStyle = isEraseModeOn ? canvasBgColor : pickedColor;
     ctx.beginPath();
     ctx.arc(startPoint.x, startPoint.y, 2, 0, 2 * Math.PI);
