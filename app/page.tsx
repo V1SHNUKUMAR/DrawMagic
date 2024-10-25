@@ -21,6 +21,7 @@ export default function Home() {
     ctx.beginPath();
     ctx.lineWidth = brushDets?.brushThickness;
     ctx.strokeStyle = pickedColor;
+
     ctx.moveTo(startPoint.x, startPoint.y);
     ctx.lineTo(currX, currY);
     ctx.stroke();
