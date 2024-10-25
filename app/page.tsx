@@ -22,7 +22,8 @@ export default function Home() {
     let startPoint = prevPoint ?? currPoint;
     ctx.beginPath();
     ctx.lineWidth = brushDets?.brushThickness;
-    ctx.strokeStyle = isEraseModeOn ? canvasBgColor : pickedColor;
+    ctx.strokeStyle = pickedColor;
+
     ctx.moveTo(startPoint.x, startPoint.y);
     ctx.lineTo(currX, currY);
     ctx.stroke();
