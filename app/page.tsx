@@ -3,6 +3,7 @@
 import { useDraw } from "@/hooks/useDraw";
 import { useEffect, useRef, useState } from "react";
 import Sidebar from "./components/Sidebar";
+import { useScreenshot, createFileName } from "use-react-screenshot";
 
 export default function Home() {
   const [pickedColor, setPickedColor] = useState<string>("#000");
@@ -15,6 +16,10 @@ export default function Home() {
   const [isEraseModeOn, setIsEraseModeOn] = useState(false);
 
   const { canvasRef, onMouseDown, clearCanvas } = useDraw(drawLine);
+
+  const [image, takeScreenshot] = useScreenshot();
+  const getImage = () => takeScreenshot(canvasRef.current);
+  const [isScreenshotLoading, setIsScreenshotLoading] = useState(false);
 
   function drawLine({ ctx, currPoint, prevPoint }: Draw): void {
     const { x: currX, y: currY } = currPoint;
@@ -33,6 +38,39 @@ export default function Home() {
     ctx.arc(startPoint.x, startPoint.y, 2, 0, 2 * Math.PI);
     ctx.fill();
   }
+
+  const downloadImage = (
+    image: string,
+    { name = "screenshot", extension = "png" }
+  ) => {
+    const a = document.createElement("a");
+    a.href = image;
+    a.download = createFileName(extension, name);
+    a.click();
+  };
+
+  const handleTakeScreenshot = () => {
+    if (!canvasRef?.current) {
+      console.error("Canvas reference is null or undefined.");
+      return;
+    }
+
+    setIsScreenshotLoading(true);
+
+    // Ignore TypeScript checks for takeScreenshot
+    // @ts-ignore
+    takeScreenshot(canvasRef.current)
+      .then((image: string) => {
+        downloadImage(image, { name: "draw-magic-board" });
+        return "";
+      })
+      .catch((error: Error) => {
+        console.error("Error taking screenshot:", error);
+      })
+      .finally(() => {
+        setIsScreenshotLoading(false);
+      });
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -80,6 +118,8 @@ export default function Home() {
         brushDets={brushDets}
         handleChange={handleChange}
         isEraseModeOn={isEraseModeOn}
+        handleTakeScreenshot={handleTakeScreenshot}
+        isScreenshotLoading={isScreenshotLoading}
       />
       <div className="h-full bg-transparent">
         <canvas
