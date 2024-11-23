@@ -38,10 +38,11 @@ const CursorProvider = ({ children }: any) => {
   const getCustomCursor = () => {
     switch (cursor) {
       case "eraser":
-        return <BsEraserFill className="text-lg text-black dark:text-white" />;
+        return <div className="h-[10px] w-[10px] rounded-full bg-black"></div>;
         break;
 
       default:
+        return <div className="h-[10px] w-[10px] rounded-full bg-black"></div>;
         break;
     }
   };
