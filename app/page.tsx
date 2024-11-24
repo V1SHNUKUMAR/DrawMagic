@@ -72,22 +72,24 @@ export default function Home() {
 
   return (
     <div className="h-screen w-full bg-zinc-800">
-      <Sidebar
-        pickedColor={pickedColor}
-        setPickedColor={setPickedColor}
-        selectedPopup={selectedPopup}
-        setSelectedPopup={setSelectedPopup}
-        clearCanvas={clearCanvas}
-        brushDets={brushDets}
-        handleChange={handleChange}
-        isEraseModeOn={isEraseModeOn}
-      />
       <CursorProvider>
-        <DrawingCanvas
-          canvasRef={canvasRef}
-          onMouseDown={onMouseDown}
-          canvasBgColor={canvasBgColor}
-        />
+        <>
+          <Sidebar
+            pickedColor={pickedColor}
+            setPickedColor={setPickedColor}
+            selectedPopup={selectedPopup}
+            setSelectedPopup={setSelectedPopup}
+            clearCanvas={clearCanvas}
+            brushDets={brushDets}
+            handleChange={handleChange}
+            isEraseModeOn={isEraseModeOn}
+          />
+          <DrawingCanvas
+            canvasRef={canvasRef}
+            onMouseDown={onMouseDown}
+            canvasBgColor={canvasBgColor}
+          />
+        </>
       </CursorProvider>
     </div>
   );

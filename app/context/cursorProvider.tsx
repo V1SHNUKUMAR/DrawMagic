@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
+import { BsEraserFill } from "react-icons/bs";
 
 export const CursorContext = createContext<any>(null);
 
@@ -34,9 +35,17 @@ const CursorProvider = ({ children }: any) => {
 
   const { x, y } = mousePosition;
 
-  //   const getCustomCursor = {
-  //     eraser:
-  //   };
+  const getCustomCursor = () => {
+    switch (cursor) {
+      case "eraser":
+        return <div className="h-[10px] w-[10px] rounded-full bg-black"></div>;
+        break;
+
+      default:
+        return <div className="h-[10px] w-[10px] rounded-full bg-black"></div>;
+        break;
+    }
+  };
 
   return (
     <CursorContext.Provider
@@ -59,7 +68,7 @@ const CursorProvider = ({ children }: any) => {
             borderRadius: cursor === "pen" ? "100px" : "",
           }}
         >
-          {/* {cursor} */}
+          {getCustomCursor()}
         </div>
       )}
     </CursorContext.Provider>

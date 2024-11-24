@@ -5,7 +5,7 @@ import GenericPopupOver from "./GenericPopover";
 interface ElementWithPopoverProps {
   component?: React.ElementType;
   tooltip?: string | JSX.Element | (() => JSX.Element);
-  content: any;
+  content: any; //content for popover
   onClose?: any;
   positionProps?: {
     top?: string | number;

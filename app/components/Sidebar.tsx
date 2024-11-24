@@ -5,8 +5,8 @@ import BrushThicknessPopup from "./popover/BrushThicknessPopover";
 import { Tooltip } from "antd";
 import ElementWidthPopover from "./generic/ElementWithPopover";
 import ColorPickerPopover from "./popover/ColorPickerPopover";
-import { BsBorderWidth, BsEraserFill } from "react-icons/bs";
 import { CursorContext } from "../context/cursorProvider";
+import { BsBorderWidth, BsEraserFill } from "react-icons/bs";
 
 interface SidebarPropType {
   pickedColor: string;
@@ -29,7 +29,7 @@ const Sidebar = ({
   brushDets,
   isEraseModeOn,
 }: SidebarPropType) => {
-  // const { setCustomCursor } = useContext(CursorContext);
+  const { setCustomCursor } = useContext(CursorContext);
 
   return (
     <div className="fixed z-10 h-screen pl-5 py-5 bg-transparent">
@@ -110,7 +110,10 @@ const Sidebar = ({
             <div>
               <button
                 type="button"
-                onClick={() => handleChange("toggleEraseMode")}
+                onClick={() => {
+                  handleChange("toggleEraseMode");
+                  setCustomCursor("eraser");
+                }}
                 className={`group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white ${
                   isEraseModeOn && "bg-white shadow-lg shadow-white/50"
                 }`}

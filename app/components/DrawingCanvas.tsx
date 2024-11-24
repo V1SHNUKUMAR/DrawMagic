@@ -31,9 +31,7 @@ const DrawingCanvas = ({
         // width={600}
         // height={500}
         className="w-full h-full"
-        style={{
-          backgroundColor: canvasBgColor,
-        }}
+        style={{ backgroundColor: canvasBgColor }}
       />
     </div>
   );
