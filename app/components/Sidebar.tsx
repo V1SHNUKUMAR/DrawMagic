@@ -17,6 +17,7 @@ interface SidebarPropType {
   handleChange: any;
   brushDets: { brushThickness: number };
   isEraseModeOn: any;
+  eraserThickness: any;
 }
 
 const Sidebar = ({
@@ -28,6 +29,7 @@ const Sidebar = ({
   handleChange,
   brushDets,
   isEraseModeOn,
+  eraserThickness,
 }: SidebarPropType) => {
   const { setCustomCursor } = useContext(CursorContext);
 
@@ -80,6 +82,8 @@ const Sidebar = ({
               <BrushThicknessPopup
                 brushThickness={brushDets?.brushThickness}
                 handleChange={handleChange}
+                isEraseModeOn={isEraseModeOn}
+                eraserThickness={eraserThickness}
               />
             )}
           />
