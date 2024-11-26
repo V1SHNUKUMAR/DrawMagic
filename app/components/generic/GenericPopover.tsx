@@ -19,7 +19,7 @@ const GenericPopupOver: React.FC<GenericPopupOverProps> = ({
 
   // Close Popup when clicking outside
   useEffect(() => {
-    const canvasElement = document.getElementById("canvasContainer"); // Selecting the canvas
+    const canvasElement = document.getElementById("canvas"); // Selecting the canvas
     const PopoverElement = PopoverRef.current;
 
     const handleOutsideClick = (event: MouseEvent) => {
@@ -56,10 +56,10 @@ const GenericPopupOver: React.FC<GenericPopupOverProps> = ({
   return (
     <div
       ref={PopoverRef}
-      className={`fixed z-50 bg-white/70 -mt-5 text-black backdrop-blur-md rounded overflow-hidden shadow-lg origin-top-left duration-300 transition ${
+      className={`fixed z-50 bg-white/70 text-black backdrop-blur-md rounded overflow-hidden shadow-lg duration-300 transition ${
         isVisible
-          ? "scale-in pointer-events-auto"
-          : "scale-out pointer-events-none"
+          ? "opacity-100 translate-x-0 pointer-events-auto"
+          : "opacity-0 -translate-x-2 pointer-events-none"
       }`}
       style={{ ...position }}
     >

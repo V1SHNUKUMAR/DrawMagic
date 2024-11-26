@@ -1,8 +1,10 @@
 "use client";
 
 import { useDraw } from "@/hooks/useDraw";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Sidebar from "./components/Sidebar";
+import CursorProvider, { CursorContext } from "./context/cursorProvider";
+import DrawingCanvas from "./components/DrawingCanvas";
 
 export default function Home() {
   const [pickedColor, setPickedColor] = useState<string>("#000");
@@ -12,6 +14,7 @@ export default function Home() {
     brushOpacity: 100,
   });
   const [canvasBgColor, setCanvasBgColor] = useState("#D4D4D8");
+  const [eraserThickness, setEraserThickness] = useState(5);
   const [isEraseModeOn, setIsEraseModeOn] = useState(false);
 
   const { canvasRef, onMouseDown, clearCanvas } = useDraw(drawLine);
@@ -21,9 +24,8 @@ export default function Home() {
 
     let startPoint = prevPoint ?? currPoint;
     ctx.beginPath();
-    ctx.lineWidth = brushDets?.brushThickness;
-    ctx.strokeStyle = pickedColor;
-
+    ctx.lineWidth = isEraseModeOn ? eraserThickness : brushDets?.brushThickness;
+    ctx.strokeStyle = isEraseModeOn ? canvasBgColor : pickedColor;
     ctx.moveTo(startPoint.x, startPoint.y);
     ctx.lineTo(currX, currY);
     ctx.stroke();
@@ -54,6 +56,10 @@ export default function Home() {
         setBrushDets({ ...brushDets, brushThickness: data });
         break;
       }
+      case "adjustEraserThickness": {
+        setEraserThickness(data);
+        break;
+      }
       case "adjustBrushOpacity": {
         setBrushDets({ ...brushDets, brushOpacity: data });
         break;
@@ -71,29 +77,26 @@ export default function Home() {
 
   return (
     <div className="h-screen w-full bg-zinc-800">
-      <Sidebar
-        pickedColor={pickedColor}
-        setPickedColor={setPickedColor}
-        selectedPopup={selectedPopup}
-        setSelectedPopup={setSelectedPopup}
-        clearCanvas={clearCanvas}
-        brushDets={brushDets}
-        handleChange={handleChange}
-        isEraseModeOn={isEraseModeOn}
-      />
-      <div className="h-full bg-transparent">
-        <canvas
-          onMouseDown={onMouseDown}
-          ref={canvasRef}
-          id="canvasContainer"
-          // width={600}
-          // height={500}
-          className={`w-full h-full`}
-          style={{
-            backgroundColor: canvasBgColor,
-          }}
-        />
-      </div>
+      <CursorProvider>
+        <>
+          <Sidebar
+            pickedColor={pickedColor}
+            setPickedColor={setPickedColor}
+            selectedPopup={selectedPopup}
+            setSelectedPopup={setSelectedPopup}
+            clearCanvas={clearCanvas}
+            brushDets={brushDets}
+            handleChange={handleChange}
+            isEraseModeOn={isEraseModeOn}
+            eraserThickness={eraserThickness}
+          />
+          <DrawingCanvas
+            canvasRef={canvasRef}
+            onMouseDown={onMouseDown}
+            canvasBgColor={canvasBgColor}
+          />
+        </>
+      </CursorProvider>
     </div>
   );
 }
