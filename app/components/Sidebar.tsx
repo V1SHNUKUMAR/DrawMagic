@@ -146,9 +146,7 @@ const Sidebar = ({
               <button
                 type="button"
                 onClick={handleTakeScreenshot}
-                className={`group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white ${
-                  isEraseModeOn && "bg-white shadow-lg shadow-white/50"
-                }`}
+                className={`group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white`}
               >
                 {isScreenshotLoading ? (
                   <AiOutlineLoading3Quarters
