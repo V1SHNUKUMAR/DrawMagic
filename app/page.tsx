@@ -166,6 +166,20 @@ export default function Home() {
             onMouseDown={onMouseDown}
             canvasBgColor={canvasBgColor}
           />
+          {/* <div className="h-screen w-screen fixed top-0 left-0 flex items-center justify-center"> */}
+          <div
+            className={`fixed top-0 left-0 z-50 w-full h-full border border-black duration-1000 ${
+              image
+                ? "scale-0 opacity-0 visible"
+                : "scale-100 opacity-100 invisible"
+            }`}
+          >
+            <img
+              src={image}
+              className="w-full h-full object-center object-contain"
+            />
+          </div>
+          {/* </div> */}
         </>
       </CursorProvider>
     </div>
