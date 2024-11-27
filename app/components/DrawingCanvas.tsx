@@ -15,7 +15,7 @@ const DrawingCanvas = ({
   const { setCustomCursor, onMouseEnterCanvas, onMouseLeaveCanvas } =
     useContext(CursorContext);
 
-  console.log("context; ", useContext(CursorContext));
+  // console.log("context; ", useContext(CursorContext));
 
   return (
     <div

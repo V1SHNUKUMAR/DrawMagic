@@ -19,6 +19,7 @@ interface SidebarPropType {
   handleChange: any;
   brushDets: { brushThickness: number };
   isEraseModeOn: any;
+  eraserThickness: any;
   handleTakeScreenshot: any;
   isScreenshotLoading: any;
 }
@@ -32,6 +33,7 @@ const Sidebar = ({
   handleChange,
   brushDets,
   isEraseModeOn,
+  eraserThickness,
   handleTakeScreenshot,
   isScreenshotLoading,
 }: SidebarPropType) => {
@@ -86,6 +88,8 @@ const Sidebar = ({
               <BrushThicknessPopup
                 brushThickness={brushDets?.brushThickness}
                 handleChange={handleChange}
+                isEraseModeOn={isEraseModeOn}
+                eraserThickness={eraserThickness}
               />
             )}
           />
