@@ -6,10 +6,10 @@ import { Tooltip } from "antd";
 import ColorPickerPopover from "./popover/ColorPickerPopover";
 import { CursorContext } from "../context/cursorProvider";
 import { BsBorderWidth, BsEraserFill } from "react-icons/bs";
-import DarkModeToggle from "./DarkModeToggle";
 import ElementWithPopover from "./generic/ElementWithPopover";
 import { IoCamera } from "react-icons/io5";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import DarkModeToggle from "./DarkModeToggle";
 
 interface SidebarPropType {
   pickedColor: string;
