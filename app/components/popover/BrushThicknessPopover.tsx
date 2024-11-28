@@ -24,7 +24,9 @@ const BrushThicknessPopup = ({
   return (
     <div className="p-3 pr-0 space-y-1">
       <div>
-        <p className="text-xs text-gray-600 font-medium">Brush</p>
+        <p className="text-xs text-gray-600 dark:text-gray-200 font-medium">
+          Brush
+        </p>
         <div className="flex items-center gap-2">
           <Slider
             className="min-w-[150px]"
@@ -54,7 +56,9 @@ const BrushThicknessPopup = ({
         </div>
       </div>
       <div>
-        <p className="text-xs text-gray-600 font-medium">Eraser</p>
+        <p className="text-xs text-gray-600 dark:text-gray-200 font-medium">
+          Eraser
+        </p>
         <div className="flex items-center gap-2">
           <Slider
             className="min-w-[150px]"
