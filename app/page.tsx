@@ -9,13 +9,18 @@ import DrawingCanvas from "./components/DrawingCanvas";
 import { useScreenshot, createFileName } from "use-react-screenshot";
 
 export default function Home() {
-  const [pickedColor, setPickedColor] = useState<string>("#000");
+  const [isDarkModeOn, setIsDarkModeOn] = useState(false);
+  const [pickedColor, setPickedColor] = useState<string>(
+    isDarkModeOn ? "white" : "#000"
+  );
   const [selectedPopup, setSelectedPopup] = useState<string | null>(null);
   const [brushDets, setBrushDets] = useState({
     brushThickness: 5,
     brushOpacity: 100,
   });
-  const [canvasBgColor, setCanvasBgColor] = useState("#D4D4D8");
+  const [canvasBgColor, setCanvasBgColor] = useState(
+    isDarkModeOn ? "#18181b" : "#D4D4D8"
+  );
   const [eraserThickness, setEraserThickness] = useState(5);
   const [isEraseModeOn, setIsEraseModeOn] = useState(false);
 
@@ -114,6 +119,29 @@ export default function Home() {
     }
   }
 
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkModeOn;
+    setIsDarkModeOn(newDarkMode);
+    document.documentElement.classList.toggle("dark", newDarkMode);
+    localStorage.setItem("theme", newDarkMode ? "dark" : "light");
+  };
+
+  useEffect(() => {
+    // Initialize dark mode based on user preference or system settings
+    const darkMode =
+      localStorage.getItem("theme") === "dark" ||
+      (!localStorage.getItem("theme") &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+    setIsDarkModeOn(darkMode);
+    document.documentElement.classList.toggle("dark", darkMode);
+  }, []);
+
+  useEffect(() => {
+    setCanvasBgColor(isDarkModeOn ? "#18181b" : "#D4D4D8");
+    setPickedColor(isDarkModeOn ? "white" : "#000");
+  }, [isDarkModeOn]);
+
   return (
     <div className="h-screen w-full bg-zinc-800">
       <CursorProvider>
@@ -130,6 +158,8 @@ export default function Home() {
             eraserThickness={eraserThickness}
             handleTakeScreenshot={handleTakeScreenshot}
             isScreenshotLoading={isScreenshotLoading}
+            isDarkModeOn={isDarkModeOn}
+            toggleDarkMode={toggleDarkMode}
           />
           <DrawingCanvas
             canvasRef={canvasRef}

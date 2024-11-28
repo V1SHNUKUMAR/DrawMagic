@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GrPowerReset } from "react-icons/gr";
 import { FaPen } from "react-icons/fa";
 import BrushThicknessPopup from "./popover/BrushThicknessPopover";
@@ -9,6 +9,7 @@ import { CursorContext } from "../context/cursorProvider";
 import { BsBorderWidth, BsEraserFill } from "react-icons/bs";
 import { IoCamera } from "react-icons/io5";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import DarkModeToggle from "./DarkModeToggle";
 
 interface SidebarPropType {
   pickedColor: string;
@@ -22,6 +23,8 @@ interface SidebarPropType {
   eraserThickness: any;
   handleTakeScreenshot: any;
   isScreenshotLoading: any;
+  isDarkModeOn: boolean;
+  toggleDarkMode: () => void;
 }
 
 const Sidebar = ({
@@ -36,13 +39,15 @@ const Sidebar = ({
   eraserThickness,
   handleTakeScreenshot,
   isScreenshotLoading,
+  isDarkModeOn,
+  toggleDarkMode,
 }: SidebarPropType) => {
   const { setCustomCursor } = useContext(CursorContext);
 
   return (
     <div className="fixed z-10 h-screen pl-5 py-5 bg-transparent">
-      <div className="h-full bg-black/50 backdrop-blur-lg py-5 px-5 rounded-xl flex flex-col justify-center items-center">
-        <div className="space-y-5">
+      <div className="h-full duration-200 bg-black/50 dark:bg-white/10 backdrop-blur-lg py-4 px-3 rounded-xl flex flex-col justify-between items-center">
+        <div className="flex flex-col items-center justify-center gap-5">
           {/* pen */}
           <Tooltip
             overlayClassName="p-0"
@@ -187,10 +192,23 @@ const Sidebar = ({
               <ColorPickerPopover
                 pickedColor={pickedColor}
                 setPickedColor={setPickedColor}
+                isDarkModeOn={isDarkModeOn}
               />
             )}
           />
         </div>
+        {/* toggle dark mode */}
+        <Tooltip
+          overlayClassName="p-0"
+          overlayStyle={{ fontSize: "12px" }}
+          mouseEnterDelay={0.75}
+          title={`Switch to ${isDarkModeOn ? "Light Mode" : "Dark Mode"}`}
+        >
+          <DarkModeToggle
+            isDarkModeOn={isDarkModeOn}
+            toggleDarkMode={toggleDarkMode}
+          />
+        </Tooltip>
       </div>
     </div>
   );
