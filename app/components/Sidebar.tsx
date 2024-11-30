@@ -6,10 +6,10 @@ import { Tooltip } from "antd";
 import ColorPickerPopover from "./popover/ColorPickerPopover";
 import { CursorContext } from "../context/cursorProvider";
 import { BsBorderWidth, BsEraserFill } from "react-icons/bs";
+import ElementWithPopover from "./generic/ElementWithPopover";
 import { IoCamera } from "react-icons/io5";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import DarkModeToggle from "./DarkModeToggle";
-import ElementWithPopover from "./generic/ElementWithPopover";
 
 interface SidebarPropType {
   pickedColor: string;
@@ -46,7 +46,7 @@ const Sidebar = ({
 
   return (
     <div className="fixed z-10 h-screen pl-5 py-5 bg-transparent">
-      <div className="h-full duration-200 bg-black/50 dark:bg-white/10 backdrop-blur-lg py-4 px-2 rounded-xl flex flex-col justify-between items-center">
+      <div className="h-full duration-200 bg-black/50 dark:bg-white/10 border border-zinc-300 dark:border-zinc-700 backdrop-blur-lg py-4 px-2 rounded-xl flex flex-col justify-between items-center">
         <div className="flex flex-col items-center justify-center gap-3">
           {/* pen */}
 
@@ -136,31 +136,29 @@ const Sidebar = ({
           {/* divider */}
           <div className="h-[3px] w-[3px] bg-white rounded-full mx-auto mb-5"></div>
           {/* take screenshot */}
-          <Tooltip
-            overlayClassName="p-0"
-            overlayStyle={{ fontSize: "12px" }}
-            mouseEnterDelay={0.75}
-            title={"Take Screenshot"}
+          <button
+            type="button"
+            onClick={handleTakeScreenshot}
+            className="group"
           >
-            <div>
-              <button
-                type="button"
-                onClick={handleTakeScreenshot}
-                className={`group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white`}
-              >
-                {isScreenshotLoading ? (
-                  <AiOutlineLoading3Quarters
-                    className={`animate-spin text-xl text-white group-hover:text-black`}
-                    strokeWidth={2}
-                  />
-                ) : (
-                  <IoCamera
-                    className={`text-xl text-white group-hover:text-black`}
-                  />
-                )}
-              </button>
+            <div
+              className={`text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] mx-auto duration-200 group-hover:bg-white`}
+            >
+              {isScreenshotLoading ? (
+                <AiOutlineLoading3Quarters
+                  className={`animate-spin text-xl text-white group-hover:text-black`}
+                  strokeWidth={2}
+                />
+              ) : (
+                <IoCamera
+                  className={`text-xl text-white group-hover:text-black`}
+                />
+              )}
             </div>
-          </Tooltip>
+            <p className="text-[10px] text-center mt-1.5 duration-200 opacity-0 group-hover:opacity-100">
+              Screenshot
+            </p>
+          </button>
           {/* color picker */}
           <ElementWithPopover
             // tooltip={"Choose Color"}

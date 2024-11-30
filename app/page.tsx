@@ -160,6 +160,8 @@ export default function Home() {
             isScreenshotLoading={isScreenshotLoading}
             isDarkModeOn={isDarkModeOn}
             toggleDarkMode={toggleDarkMode}
+            handleTakeScreenshot={handleTakeScreenshot}
+            isScreenshotLoading={isScreenshotLoading}
           />
           <DrawingCanvas
             canvasRef={canvasRef}
