@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { useDraw } from "@/hooks/useDraw";
@@ -5,6 +6,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import CursorProvider, { CursorContext } from "./context/cursorProvider";
 import DrawingCanvas from "./components/DrawingCanvas";
+import { useScreenshot, createFileName } from "use-react-screenshot";
 
 export default function Home() {
   const [pickedColor, setPickedColor] = useState<string>("#000");
@@ -18,6 +20,10 @@ export default function Home() {
   const [isEraseModeOn, setIsEraseModeOn] = useState(false);
 
   const { canvasRef, onMouseDown, clearCanvas } = useDraw(drawLine);
+
+  const [image, takeScreenshot] = useScreenshot();
+  const getImage = () => takeScreenshot(canvasRef.current);
+  const [isScreenshotLoading, setIsScreenshotLoading] = useState(false);
 
   function drawLine({ ctx, currPoint, prevPoint }: Draw): void {
     const { x: currX, y: currY } = currPoint;
@@ -35,6 +41,39 @@ export default function Home() {
     ctx.arc(startPoint.x, startPoint.y, 2, 0, 2 * Math.PI);
     ctx.fill();
   }
+
+  const downloadImage = (
+    image: string,
+    { name = "screenshot", extension = "png" }
+  ) => {
+    const a = document.createElement("a");
+    a.href = image;
+    a.download = createFileName(extension, name);
+    a.click();
+  };
+
+  const handleTakeScreenshot = () => {
+    if (!canvasRef?.current) {
+      console.error("Canvas reference is null or undefined.");
+      return;
+    }
+
+    setIsScreenshotLoading(true);
+
+    // Ignore TypeScript checks for takeScreenshot
+    takeScreenshot(canvasRef.current)
+      //@ts-expect-error ( This is type isse in the takescreenshot )
+      .then((image: string) => {
+        downloadImage(image, { name: "draw-magic-board" });
+        return "";
+      })
+      .catch((error: Error) => {
+        console.error("Error taking screenshot:", error);
+      })
+      .finally(() => {
+        setIsScreenshotLoading(false);
+      });
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -89,12 +128,28 @@ export default function Home() {
             handleChange={handleChange}
             isEraseModeOn={isEraseModeOn}
             eraserThickness={eraserThickness}
+            handleTakeScreenshot={handleTakeScreenshot}
+            isScreenshotLoading={isScreenshotLoading}
           />
           <DrawingCanvas
             canvasRef={canvasRef}
             onMouseDown={onMouseDown}
             canvasBgColor={canvasBgColor}
           />
+          {/* <div className="h-screen w-screen fixed top-0 left-0 flex items-center justify-center"> */}
+          <div
+            className={`fixed top-0 left-0 z-50 w-full h-full border border-black duration-1000 ${
+              image
+                ? "scale-0 opacity-0 visible"
+                : "scale-100 opacity-100 invisible"
+            }`}
+          >
+            <img
+              src={image}
+              className="w-full h-full object-center object-contain"
+            />
+          </div>
+          {/* </div> */}
         </>
       </CursorProvider>
     </div>

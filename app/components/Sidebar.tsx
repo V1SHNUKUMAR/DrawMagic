@@ -7,6 +7,8 @@ import ElementWidthPopover from "./generic/ElementWithPopover";
 import ColorPickerPopover from "./popover/ColorPickerPopover";
 import { CursorContext } from "../context/cursorProvider";
 import { BsBorderWidth, BsEraserFill } from "react-icons/bs";
+import { IoCamera } from "react-icons/io5";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface SidebarPropType {
   pickedColor: string;
@@ -18,6 +20,8 @@ interface SidebarPropType {
   brushDets: { brushThickness: number };
   isEraseModeOn: any;
   eraserThickness: any;
+  handleTakeScreenshot: any;
+  isScreenshotLoading: any;
 }
 
 const Sidebar = ({
@@ -30,6 +34,8 @@ const Sidebar = ({
   brushDets,
   isEraseModeOn,
   eraserThickness,
+  handleTakeScreenshot,
+  isScreenshotLoading,
 }: SidebarPropType) => {
   const { setCustomCursor } = useContext(CursorContext);
 
@@ -131,6 +137,32 @@ const Sidebar = ({
           </Tooltip>
           {/* divider */}
           <div className="h-[3px] w-[3px] bg-white rounded-full mx-auto"></div>
+          {/* take screenshot */}
+          <Tooltip
+            overlayClassName="p-0"
+            overlayStyle={{ fontSize: "12px" }}
+            mouseEnterDelay={0.75}
+            title={"Take Screenshot"}
+          >
+            <div>
+              <button
+                type="button"
+                onClick={handleTakeScreenshot}
+                className={`group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white`}
+              >
+                {isScreenshotLoading ? (
+                  <AiOutlineLoading3Quarters
+                    className={`animate-spin text-xl text-white group-hover:text-black`}
+                    strokeWidth={2}
+                  />
+                ) : (
+                  <IoCamera
+                    className={`text-xl text-white group-hover:text-black`}
+                  />
+                )}
+              </button>
+            </div>
+          </Tooltip>
           {/* color picker */}
           <ElementWidthPopover
             positionProps={{ top: "auto", bottom: "0" }}
