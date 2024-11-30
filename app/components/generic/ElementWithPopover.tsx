@@ -82,7 +82,7 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
           {label && typeof label === "function" ? (
             label()
           ) : (
-            <p className="text-[10px] text-center mt-1.5 duration-200 opacity-0 group-hover:opacity-100">
+            <p className="text-[10px] text-center mt-1.5 text-zinc-700 dark:text-white duration-200 opacity-0 group-hover:opacity-100">
               {label}
             </p>
           )}
