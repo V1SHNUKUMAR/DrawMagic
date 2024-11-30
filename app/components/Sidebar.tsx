@@ -46,7 +46,7 @@ const Sidebar = ({
 
   return (
     <div className="fixed z-10 h-screen pl-5 py-5 bg-transparent">
-      <div className="h-full duration-200 bg-black/50 dark:bg-white/10 backdrop-blur-lg py-4 px-2 rounded-xl flex flex-col justify-between items-center">
+      <div className="h-full duration-200 bg-black/50 dark:bg-white/10 border border-zinc-300 dark:border-zinc-700 backdrop-blur-lg py-4 px-2 rounded-xl flex flex-col justify-between items-center">
         <div className="flex flex-col items-center justify-center gap-3">
           {/* pen */}
 
