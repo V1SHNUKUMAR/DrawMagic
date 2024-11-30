@@ -42,7 +42,9 @@ const BrushThicknessPopup = ({
   return (
     <div className="p-3 pr-0 space-y-4">
       <div>
-        <p className="text-xs text-gray-600 font-medium mb-1">Brush</p>
+        <p className="text-xs text-gray-600 dark:text-gray-200 font-medium mb-1">
+          Brush
+        </p>
         <div className="flex items-center gap-2">
           <GenericSlider
             value={selectedBrushThickness || 0}
@@ -66,7 +68,9 @@ const BrushThicknessPopup = ({
         </div>
       </div>
       <div>
-        <p className="text-xs text-gray-600 font-medium mb-1">Eraser</p>
+        <p className="text-xs text-gray-600 dark:text-gray-200 font-medium mb-1">
+          Eraser
+        </p>
         <div className="flex items-center gap-2">
           <GenericSlider
             value={currEraserThickness || 0}
