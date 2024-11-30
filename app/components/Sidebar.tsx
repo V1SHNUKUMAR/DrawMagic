@@ -3,13 +3,13 @@ import { GrPowerReset } from "react-icons/gr";
 import { FaPen } from "react-icons/fa";
 import BrushThicknessPopup from "./popover/BrushThicknessPopover";
 import { Tooltip } from "antd";
-import ElementWidthPopover from "./generic/ElementWithPopover";
 import ColorPickerPopover from "./popover/ColorPickerPopover";
 import { CursorContext } from "../context/cursorProvider";
 import { BsBorderWidth, BsEraserFill } from "react-icons/bs";
 import { IoCamera } from "react-icons/io5";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import DarkModeToggle from "./DarkModeToggle";
+import ElementWithPopover from "./generic/ElementWithPopover";
 
 interface SidebarPropType {
   pickedColor: string;
@@ -46,33 +46,33 @@ const Sidebar = ({
 
   return (
     <div className="fixed z-10 h-screen pl-5 py-5 bg-transparent">
-      <div className="h-full duration-200 bg-black/50 dark:bg-white/10 backdrop-blur-lg py-4 px-3 rounded-xl flex flex-col justify-between items-center">
-        <div className="flex flex-col items-center justify-center gap-5">
+      <div className="h-full duration-200 bg-black/50 dark:bg-white/10 backdrop-blur-lg py-4 px-2 rounded-xl flex flex-col justify-between items-center">
+        <div className="flex flex-col items-center justify-center gap-3">
           {/* pen */}
-          <Tooltip
-            overlayClassName="p-0"
-            overlayStyle={{ fontSize: "12px" }}
-            mouseEnterDelay={0.75}
-            title={"Pen"}
+
+          <button
+            type="button"
+            onClick={() => handleChange("toggleEraseMode")}
+            className="group"
           >
-            <div>
-              <button
-                type="button"
-                onClick={() => handleChange("toggleEraseMode")}
-                className={`group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white ${
-                  !isEraseModeOn && "bg-white shadow-lg shadow-white/50"
-                }`}
-              >
-                <FaPen
-                  className={`text-base text-white group-hover:text-black`}
-                  color={!isEraseModeOn ? "black" : ""}
-                />
-              </button>
+            <div
+              className={`text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] mx-auto duration-200 group-hover:bg-white ${
+                !isEraseModeOn && "bg-white shadow-lg shadow-white/50"
+              }`}
+            >
+              <FaPen
+                className={`text-base text-white group-hover:text-black`}
+                color={!isEraseModeOn ? "black" : ""}
+              />
             </div>
-          </Tooltip>
+            <p className="text-[10px] text-center mt-1.5 duration-200 opacity-0 group-hover:opacity-100">
+              Pen
+            </p>
+          </button>
           {/* brush thickness */}
-          <ElementWidthPopover
-            tooltip={"Thickness"}
+          <ElementWithPopover
+            // tooltip={"Thickness"}
+            label={"Thickness"}
             component={(props) => (
               <button
                 type="button"
@@ -83,7 +83,7 @@ const Sidebar = ({
                       : null
                   );
                 }}
-                className="group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white"
+                className="text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] mx-auto duration-200 group-hover:bg-white"
                 {...props}
               >
                 <BsBorderWidth className="text-base text-white group-hover:text-black" />
@@ -99,49 +99,43 @@ const Sidebar = ({
             )}
           />
           {/* reset */}
-          <Tooltip
-            overlayClassName="p-0"
-            overlayStyle={{ fontSize: "12px" }}
-            mouseEnterDelay={0.75}
-            title={"Erase all"}
-          >
-            <div>
-              <button
-                type="button"
-                onClick={clearCanvas}
-                className="group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white"
-              >
-                <GrPowerReset className="text-lg text-white group-hover:text-black" />
-              </button>
+
+          <button type="button" className="group" onClick={clearCanvas}>
+            <div
+              onClick={clearCanvas}
+              className="text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] mx-auto duration-200 group-hover:bg-white"
+            >
+              <GrPowerReset className="text-lg text-white group-hover:text-black" />
             </div>
-          </Tooltip>
+            <p className="text-[10px] text-center mt-1.5 duration-200 opacity-0 group-hover:opacity-100">
+              Reset
+            </p>
+          </button>
           {/* eraser */}
-          <Tooltip
-            overlayClassName="p-0"
-            overlayStyle={{ fontSize: "12px" }}
-            mouseEnterDelay={0.75}
-            title={"Eraser"}
+          <button
+            type="button"
+            onClick={() => {
+              handleChange("toggleEraseMode");
+              setCustomCursor("eraser");
+            }}
+            className="group"
           >
-            <div>
-              <button
-                type="button"
-                onClick={() => {
-                  handleChange("toggleEraseMode");
-                  setCustomCursor("eraser");
-                }}
-                className={`group text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] duration-200 hover:bg-white ${
-                  isEraseModeOn && "bg-white shadow-lg shadow-white/50"
-                }`}
-              >
-                <BsEraserFill
-                  className={`text-lg text-white group-hover:text-black`}
-                  color={isEraseModeOn ? "black" : ""}
-                />
-              </button>
+            <div
+              className={`text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] mx-auto duration-200 group-hover:bg-white ${
+                isEraseModeOn && "bg-white shadow-lg shadow-white/50"
+              }`}
+            >
+              <BsEraserFill
+                className={`text-lg text-white group-hover:text-black`}
+                color={isEraseModeOn ? "black" : ""}
+              />
             </div>
-          </Tooltip>
+            <p className="text-[10px] text-center mt-1.5 duration-200 opacity-0 group-hover:opacity-100">
+              Eraser
+            </p>
+          </button>
           {/* divider */}
-          <div className="h-[3px] w-[3px] bg-white rounded-full mx-auto"></div>
+          <div className="h-[3px] w-[3px] bg-white rounded-full mx-auto mb-5"></div>
           {/* take screenshot */}
           <Tooltip
             overlayClassName="p-0"
@@ -169,9 +163,9 @@ const Sidebar = ({
             </div>
           </Tooltip>
           {/* color picker */}
-          <ElementWidthPopover
-            positionProps={{ top: "auto", bottom: "0" }}
-            tooltip={"Choose Color"}
+          <ElementWithPopover
+            // tooltip={"Choose Color"}
+            label={"Color"}
             component={(props) => (
               <button
                 // onClick={() => {
@@ -198,17 +192,10 @@ const Sidebar = ({
           />
         </div>
         {/* toggle dark mode */}
-        <Tooltip
-          overlayClassName="p-0"
-          overlayStyle={{ fontSize: "12px" }}
-          mouseEnterDelay={0.75}
-          title={`Switch to ${isDarkModeOn ? "Light Mode" : "Dark Mode"}`}
-        >
-          <DarkModeToggle
-            isDarkModeOn={isDarkModeOn}
-            toggleDarkMode={toggleDarkMode}
-          />
-        </Tooltip>
+        <DarkModeToggle
+          isDarkModeOn={isDarkModeOn}
+          toggleDarkMode={toggleDarkMode}
+        />
       </div>
     </div>
   );

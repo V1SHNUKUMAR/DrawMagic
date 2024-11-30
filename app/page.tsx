@@ -9,7 +9,7 @@ import DrawingCanvas from "./components/DrawingCanvas";
 import { useScreenshot, createFileName } from "use-react-screenshot";
 
 export default function Home() {
-  const [isDarkModeOn, setIsDarkModeOn] = useState(false);
+  const [isDarkModeOn, setIsDarkModeOn] = useState(true);
   const [pickedColor, setPickedColor] = useState<string>(
     isDarkModeOn ? "white" : "#000"
   );
