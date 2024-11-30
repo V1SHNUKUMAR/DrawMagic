@@ -4,11 +4,13 @@ import { ColorResult, SketchPicker } from "react-color";
 interface ColorPickerPropType {
   pickedColor: string;
   setPickedColor: (color: string) => void;
+  isDarkModeOn: boolean;
 }
 
 const ColorPickerPopover = ({
   pickedColor,
   setPickedColor,
+  isDarkModeOn,
 }: ColorPickerPropType) => {
   const [selectedColor, setSelectedColor] = useState("");
   const [recentColorsList, setRecentColorsList] = useState<string[]>([]);

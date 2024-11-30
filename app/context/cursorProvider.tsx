@@ -37,12 +37,14 @@ const CursorProvider = ({ children }: any) => {
 
   const getCustomCursor = () => {
     switch (cursor) {
-      case "eraser":
-        return <div className="h-[10px] w-[10px] rounded-full bg-black"></div>;
-        break;
+      // case "eraser":
+      //   return <div className="h-[10px] w-[10px] rounded-full bg-black"></div>;
+      //   break;
 
       default:
-        return <div className="h-[10px] w-[10px] rounded-full bg-black"></div>;
+        return (
+          <div className="h-[10px] w-[10px] rounded-full bg-black dark:bg-white"></div>
+        );
         break;
     }
   };

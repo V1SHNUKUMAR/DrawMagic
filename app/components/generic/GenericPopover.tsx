@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 
 interface GenericPopupOverProps {
@@ -56,7 +58,7 @@ const GenericPopupOver: React.FC<GenericPopupOverProps> = ({
   return (
     <div
       ref={PopoverRef}
-      className={`fixed z-50 bg-white/70 text-black backdrop-blur-md rounded overflow-hidden shadow-lg duration-300 transition ${
+      className={`fixed z-50 bg-white/70 dark:bg-black/95 text-black dark:text-white backdrop-blur-md rounded overflow-hidden border border-zinc-300 dark:border-zinc-700 shadow-lg shadow-zinc-300 dark:shadow-zinc-700 duration-300 transition ${
         isVisible
           ? "opacity-100 translate-x-0 pointer-events-auto"
           : "opacity-0 -translate-x-2 pointer-events-none"
