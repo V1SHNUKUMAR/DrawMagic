@@ -7,7 +7,7 @@ import CursorProvider, { CursorContext } from "./context/cursorProvider";
 import DrawingCanvas from "./components/DrawingCanvas";
 
 export default function Home() {
-  const [isDarkModeOn, setIsDarkModeOn] = useState(false);
+  const [isDarkModeOn, setIsDarkModeOn] = useState(true);
   const [pickedColor, setPickedColor] = useState<string>(
     isDarkModeOn ? "white" : "#000"
   );

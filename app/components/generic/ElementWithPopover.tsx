@@ -1,3 +1,5 @@
+"use client";
+
 import { ElementType, useRef, useState } from "react";
 import { Tooltip } from "antd";
 import GenericPopupOver from "./GenericPopover";
@@ -13,6 +15,7 @@ interface ElementWithPopoverProps {
     right?: string | number;
     bottom?: string | number;
   };
+  label?: string | JSX.Element | (() => JSX.Element);
 }
 
 const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
@@ -21,6 +24,7 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
   content,
   onClose,
   positionProps,
+  label,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [popoverPosition, setPopoverPosition] = useState<any>({
@@ -47,7 +51,7 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
     } else {
       const contentToAdd = typeof content === "function" ? content() : content;
       setPopoverPosition({
-        top: rect.top,
+        top: rect.top - 21,
         left: rect.right + 8,
         ...positionProps,
       });
@@ -69,10 +73,17 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
         mouseEnterDelay={0.75}
         title={tooltip && typeof tooltip === "function" ? tooltip() : tooltip}
       >
-        <div>
+        <div className="group">
           <Component
             onClick={(e: any) => togglePopover(e, content)}
           ></Component>
+          {label && typeof label === "function" ? (
+            label()
+          ) : (
+            <p className="text-[10px] text-center mt-1.5 duration-200 opacity-0 group-hover:opacity-100">
+              {label}
+            </p>
+          )}
         </div>
       </Tooltip>
 
