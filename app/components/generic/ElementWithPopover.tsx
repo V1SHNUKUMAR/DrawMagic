@@ -73,10 +73,12 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
         mouseEnterDelay={0.75}
         title={tooltip && typeof tooltip === "function" ? tooltip() : tooltip}
       >
-        <div className="group">
-          <Component
-            onClick={(e: any) => togglePopover(e, content)}
-          ></Component>
+        <button
+          type="button"
+          onClick={(e: any) => togglePopover(e, content)}
+          className="group"
+        >
+          <Component></Component>
           {label && typeof label === "function" ? (
             label()
           ) : (
@@ -84,7 +86,7 @@ const ElementWithPopover: React.FC<ElementWithPopoverProps> = ({
               {label}
             </p>
           )}
-        </div>
+        </button>
       </Tooltip>
 
       {/* Reusable popover */}
