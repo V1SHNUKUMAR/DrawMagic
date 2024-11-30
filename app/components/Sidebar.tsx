@@ -74,20 +74,19 @@ const Sidebar = ({
             // tooltip={"Thickness"}
             label={"Thickness"}
             component={(props) => (
-              <button
-                type="button"
-                onClick={() => {
-                  setSelectedPopup((val: any) =>
-                    val === null || val !== "brushThicknessPopup"
-                      ? "brushThicknessPopup"
-                      : null
-                  );
-                }}
+              <div
+                // onClick={() => {
+                //   setSelectedPopup((val: any) =>
+                //     val === null || val !== "brushThicknessPopup"
+                //       ? "brushThicknessPopup"
+                //       : null
+                //   );
+                // }}
                 className="text-black rounded-md p-2 aspect-square flex justify-center items-center text-sm h-[40px] mx-auto duration-200 group-hover:bg-white"
                 {...props}
               >
                 <BsBorderWidth className="text-base text-white group-hover:text-black" />
-              </button>
+              </div>
             )}
             content={() => (
               <BrushThicknessPopup
@@ -167,7 +166,7 @@ const Sidebar = ({
             // tooltip={"Choose Color"}
             label={"Color"}
             component={(props) => (
-              <button
+              <div
                 // onClick={() => {
                 //   setSelectedPopup((val: any) =>
                 //     val === null || val !== "colorPickerPopup"
@@ -180,7 +179,7 @@ const Sidebar = ({
                   background: pickedColor,
                 }}
                 {...props}
-              ></button>
+              ></div>
             )}
             content={() => (
               <ColorPickerPopover
